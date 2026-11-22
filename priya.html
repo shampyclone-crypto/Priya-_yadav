@@ -1,0 +1,1055 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeMaster Pro</title>
+
+<style>
+:root {
+    --bg: #0b1020;
+    --panel: #151d32;
+    --panel2: #10182a;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #9b7aff;
+    --border: #293650;
+    --green: #4ade80;
+    --red: #fb7185;
+}
+
+body.light {
+    --bg: #edf0fa;
+    --panel: #ffffff;
+    --panel2: #f2f4fb;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #7046db;
+    --border: #dce2ef;
+}
+
+body.midnight {
+    --bg: #050914;
+    --panel: #0e1930;
+    --panel2: #091225;
+    --accent: #38bdf8;
+    --border: #1c3553;
+}
+
+body.purple {
+    --bg: #1b1030;
+    --panel: #291a43;
+    --panel2: #211436;
+    --accent: #d8a5ff;
+    --border: #50346e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+    transition: .3s;
+}
+
+button, select, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+}
+
+header {
+    height: 75px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(calc((100% - 1150px)/2), 20px);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--accent);
+}
+
+.logo span {
+    color: var(--text);
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 13px;
+    border-radius: 10px;
+}
+
+main {
+    max-width: 1150px;
+    padding: 35px 20px;
+    margin: auto;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: clamp(28px, 5vw, 43px);
+    margin-bottom: 10px;
+}
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+.hero p {
+    color: var(--muted);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 23px;
+    margin-bottom: 18px;
+    min-width: 0;
+}
+
+.panel h3 {
+    margin-bottom: 18px;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+label {
+    color: var(--muted);
+    font-size: 13px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 17px 8px;
+    text-align: center;
+}
+
+.stat h2 {
+    font-size: 28px;
+    color: var(--accent);
+}
+
+.stat p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+    font-weight: 700;
+}
+
+.timer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.timer strong {
+    font-size: 25px;
+    color: var(--accent);
+}
+
+.progress {
+    height: 7px;
+    border-radius: 10px;
+    background: var(--panel2);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), #5eead4);
+    transition: width .2s;
+}
+
+.passage {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    min-height: 155px;
+    font-size: 19px;
+    line-height: 2;
+    letter-spacing: .4px;
+    overflow-wrap: anywhere;
+}
+
+.correct {
+    color: var(--green);
+}
+
+.wrong {
+    color: var(--red);
+    background: rgba(251,113,133,.16);
+}
+
+.cursor {
+    border-left: 2px solid var(--accent);
+    animation: blink .7s infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+textarea {
+    width: 100%;
+    margin-top: 17px;
+    height: 105px;
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+}
+
+textarea:focus {
+    border-color: var(--accent);
+}
+
+textarea:disabled {
+    opacity: .5;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 17px;
+}
+
+.btn {
+    padding: 12px 18px;
+    border-radius: 9px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.primary {
+    background: var(--accent);
+    color: white;
+}
+
+.secondary {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.danger {
+    background: #be4560;
+    color: white;
+}
+
+.status {
+    text-align: center;
+    color: var(--muted);
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.side-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+.side-card h3 {
+    margin-bottom: 15px;
+}
+
+.best-score {
+    text-align: center;
+    padding: 15px;
+    background: var(--panel2);
+    border-radius: 12px;
+}
+
+.best-score strong {
+    display: block;
+    font-size: 38px;
+    color: var(--green);
+}
+
+.best-score span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+
+.history-item:last-child {
+    border: 0;
+}
+
+.history-item span:last-child {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.chart {
+    height: 120px;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    gap: 7px;
+    border-bottom: 1px solid var(--border);
+    padding: 5px;
+}
+
+.bar {
+    background: linear-gradient(to top, var(--accent), #5eead4);
+    border-radius: 5px 5px 0 0;
+    flex: 1;
+    min-width: 8px;
+    max-width: 35px;
+    position: relative;
+}
+
+.bar small {
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.result {
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+.result h2 {
+    color: var(--accent);
+    font-size: 29px;
+}
+
+.final-wpm {
+    font-size: 65px;
+    font-weight: 900;
+    color: var(--green);
+    margin: 18px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.result-box {
+    background: var(--panel2);
+    border-radius: 12px;
+    padding: 17px 8px;
+}
+
+.result-box strong {
+    display: block;
+    color: var(--accent);
+    font-size: 24px;
+}
+
+.result-box span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+@media(max-width:850px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:550px) {
+    header {
+        padding: 0 15px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .passage {
+        font-size: 16px;
+        padding: 15px;
+    }
+
+    .result-grid {
+        gap: 7px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">⌨ Type<span>Master Pro</span></div>
+    <div class="header-right">
+        <button class="icon-btn" onclick="toggleSound()" id="soundBtn">🔊</button>
+        <button class="icon-btn" onclick="changeTheme()">🎨 Theme</button>
+    </div>
+</header>
+
+<main>
+
+<div class="hero">
+    <h1>Master Your <span>Typing Speed</span></h1>
+    <p>Practice smarter. Type faster. Become a champion.</p>
+</div>
+
+<div class="dashboard">
+
+<div class="main-content">
+
+    <section class="panel">
+        <h3>⚙ Test Configuration</h3>
+
+        <div class="settings-grid">
+
+            <div>
+                <label>Difficulty Level</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Test Duration</label>
+                <select id="duration">
+                    <option value="30">30 Seconds</option>
+                    <option value="60" selected>60 Seconds</option>
+                    <option value="120">120 Seconds</option>
+                </select>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat">
+            <h2 id="wpm">0</h2>
+            <p>WPM</p>
+        </div>
+        <div class="stat">
+            <h2 id="accuracy">100%</h2>
+            <p>ACCURACY</p>
+        </div>
+        <div class="stat">
+            <h2 id="errors">0</h2>
+            <p>ERRORS</p>
+        </div>
+        <div class="stat">
+            <h2 id="cpm">0</h2>
+            <p>CPM</p>
+        </div>
+    </div>
+
+    <section class="panel" id="testPanel">
+
+        <div class="timer">
+            <h3>⌨ Typing Challenge</h3>
+            <strong id="timer">60s</strong>
+        </div>
+
+        <div class="progress">
+            <div id="progressBar"></div>
+        </div>
+
+        <div id="passage" class="passage"></div>
+
+        <textarea
+            id="typingInput"
+            placeholder="Start typing here..."
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+        ></textarea>
+
+        <div class="buttons">
+            <button class="btn primary" onclick="resetTest()">↻ Restart</button>
+            <button class="btn secondary" onclick="togglePause()" id="pauseBtn">Ⅱ Pause</button>
+            <button class="btn secondary" onclick="newPassage()">🔀 New Text</button>
+        </div>
+
+        <p class="status" id="status">
+            Start typing to begin your challenge!
+        </p>
+
+    </section>
+
+    <section class="panel result" id="resultPanel">
+
+        <h2>🏆 Challenge Completed!</h2>
+        <div class="final-wpm" id="finalWpm">0</div>
+        <p>Words Per Minute</p>
+
+        <div class="result-grid">
+            <div class="result-box">
+                <strong id="finalAccuracy">0%</strong>
+                <span>Accuracy</span>
+            </div>
+            <div class="result-box">
+                <strong id="finalErrors">0</strong>
+                <span>Errors</span>
+            </div>
+            <div class="result-box">
+                <strong id="finalCPM">0</strong>
+                <span>CPM</span>
+            </div>
+        </div>
+
+        <h3 id="feedback"></h3>
+
+        <button class="btn primary" onclick="resetTest()">
+            Try Again ↻
+        </button>
+
+    </section>
+
+</div>
+
+<!-- Sidebar -->
+<aside>
+
+    <section class="side-card">
+        <h3>🏆 Personal Best</h3>
+        <div class="best-score">
+            <strong id="best">0</strong>
+            <span>Highest WPM</span>
+        </div>
+    </section>
+
+    <section class="side-card">
+        <h3>📈 Performance Chart</h3>
+        <div class="chart" id="chart"></div>
+    </section>
+
+    <section class="side-card">
+        <h3>📋 Recent Results</h3>
+        <div id="history">
+            <p style="color:var(--muted);font-size:13px">
+                Complete a test to see your history.
+            </p>
+        </div>
+        <button class="btn secondary" style="width:100%;margin-top:15px"
+        onclick="clearHistory()">Clear History</button>
+    </section>
+
+    <section class="side-card">
+        <h3>💡 Typing Tips</h3>
+        <p style="color:var(--muted);line-height:1.9;font-size:13px">
+            • Keep your fingers on the home row.<br>
+            • Focus on accuracy first.<br>
+            • Avoid looking at the keyboard.<br>
+            • Practice for 10 minutes daily.<br>
+            • Maintain a comfortable posture.
+        </p>
+    </section>
+
+</aside>
+
+</div>
+</main>
+
+<footer>
+    TypeMaster Pro © 2026 | Built with HTML, CSS & JavaScript
+</footer>
+
+<script>
+
+// PASSAGES
+const texts = {
+    easy: [
+        "The sun is shining today. I love learning new things. Practice makes us better every day.",
+        "Typing is a useful skill. Keep your hands relaxed and your eyes on the screen.",
+        "Small steps every day can lead to big success. Stay positive and keep learning."
+    ],
+
+    medium: [
+        "Programming is the process of creating instructions that allow computers to perform useful tasks. Logical thinking and regular practice make developers better.",
+        "Technology connects people around the world. Learning digital skills creates opportunities for education, creativity, and professional growth.",
+        "Web development combines structure, design, and interaction. HTML, CSS, and JavaScript work together to create engaging websites."
+    ],
+
+    hard: [
+        "JavaScript developers frequently manipulate objects, arrays, asynchronous functions, and complex application interfaces to create responsive web experiences.",
+        "Consistency, concentration, and perseverance are essential qualities for mastering challenging technical concepts and developing professional programming abilities.",
+        "Modern applications require accessibility, performance optimization, maintainability, security, and carefully structured components."
+    ]
+};
+
+// STATE
+let passage = "";
+let timeLeft = 60;
+let totalTime = 60;
+let timer = null;
+let started = false;
+let paused = false;
+let finished = false;
+let soundOn = true;
+let themeIndex = 0;
+
+const themes = ["dark", "light", "midnight", "purple"];
+
+const input = document.getElementById("typingInput");
+
+function getHistory() {
+    try {
+        return JSON.parse(localStorage.getItem("typingHistory")) || [];
+    } catch {
+        return [];
+    }
+}
+
+function getBest() {
+    return Number(localStorage.getItem("typingBest")) || 0;
+}
+
+// SOUND
+function beep(frequency = 600) {
+    if (!soundOn) return;
+
+    try {
+        const audio = new AudioContext();
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+
+        oscillator.frequency.value = frequency;
+        gain.gain.value = 0.04;
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.start();
+        oscillator.stop(audio.currentTime + 0.08);
+        oscillator.onended = () => audio.close();
+    } catch(e) {}
+}
+
+function toggleSound() {
+    soundOn = !soundOn;
+    document.getElementById("soundBtn").innerText =
+        soundOn ? "🔊" : "🔇";
+}
+
+// THEME
+function changeTheme() {
+    themeIndex = (themeIndex + 1) % themes.length;
+    document.body.className =
+        themes[themeIndex] === "dark" ? "" : themes[themeIndex];
+
+    localStorage.setItem("typingTheme", themes[themeIndex]);
+}
+
+function loadTheme() {
+    const saved = localStorage.getItem("typingTheme");
+    if (saved && themes.includes(saved)) {
+        themeIndex = themes.indexOf(saved);
+        document.body.className = saved === "dark" ? "" : saved;
+    }
+}
+
+// PASSAGE
+function choosePassage() {
+    const level = document.getElementById("difficulty").value;
+    const list = texts[level];
+
+    passage = list[Math.floor(Math.random() * list.length)];
+}
+
+function escapeHTML(char) {
+    return char.replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+function renderPassage() {
+    const typed = input.value;
+    let html = "";
+
+    for (let i = 0; i < passage.length; i++) {
+        let cls = "";
+
+        if (i < typed.length) {
+            cls = typed[i] === passage[i] ? "correct" : "wrong";
+        } else if (i === typed.length && !finished) {
+            cls = "cursor";
+        }
+
+        html += `<span class="${cls}">${escapeHTML(passage[i])}</span>`;
+    }
+
+    document.getElementById("passage").innerHTML = html;
+}
+
+// CALCULATION
+function calculate() {
+    const typed = input.value;
+    let correct = 0;
+    let errors = 0;
+
+    for (let i = 0; i < typed.length; i++) {
+        if (typed[i] === passage[i]) correct++;
+        else errors++;
+    }
+
+    const elapsed = totalTime - timeLeft;
+    const minutes = elapsed / 60;
+
+    const wpm = minutes > 0
+        ? Math.round(correct / 5 / minutes)
+        : 0;
+
+    const accuracy = typed.length
+        ? Math.round(correct / typed.length * 100)
+        : 100;
+
+    const cpm = minutes > 0
+        ? Math.round(correct / minutes)
+        : 0;
+
+    document.getElementById("wpm").innerText = wpm;
+    document.getElementById("accuracy").innerText = accuracy + "%";
+    document.getElementById("errors").innerText = errors;
+    document.getElementById("cpm").innerText = cpm;
+
+    document.getElementById("progressBar").style.width =
+        Math.min(typed.length / passage.length * 100, 100) + "%";
+
+    return {wpm, accuracy, errors, cpm, chars: typed.length};
+}
+
+// TIMER
+function startTimer() {
+    if (started || finished || paused) return;
+
+    started = true;
+
+    document.getElementById("status").innerText =
+        "🔥 Challenge started! Keep typing!";
+
+    timer = setInterval(() => {
+        timeLeft--;
+
+        document.getElementById("timer").innerText = timeLeft + "s";
+
+        calculate();
+
+        if (timeLeft <= 0) finishTest();
+    }, 1000);
+}
+
+// PAUSE
+function togglePause() {
+    if (finished) return;
+
+    if (!started) {
+        document.getElementById("status").innerText =
+            "Start typing before pausing.";
+        return;
+    }
+
+    paused = !paused;
+
+    if (paused) {
+        clearInterval(timer);
+        input.disabled = true;
+        document.getElementById("pauseBtn").innerText = "▶ Resume";
+        document.getElementById("status").innerText = "⏸ Test paused";
+    } else {
+        input.disabled = false;
+        document.getElementById("pauseBtn").innerText = "Ⅱ Pause";
+        document.getElementById("status").innerText = "🔥 Test resumed";
+        input.focus();
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timer").innerText = timeLeft + "s";
+            calculate();
+            if (timeLeft <= 0) finishTest();
+        }, 1000);
+    }
+}
+
+// INPUT
+input.addEventListener("input", () => {
+    if (finished || paused) return;
+
+    if (!started && input.value.length > 0) {
+        startTimer();
+    }
+
+    renderPassage();
+    calculate();
+    beep(500);
+
+    if (input.value.length >= passage.length) {
+        finishTest();
+    }
+});
+
+// RESULTS
+function finishTest() {
+    if (finished) return;
+
+    finished = true;
+    clearInterval(timer);
+    input.disabled = true;
+
+    const result = calculate();
+
+    document.getElementById("testPanel").style.display = "none";
+    document.getElementById("resultPanel").style.display = "block";
+
+    document.getElementById("finalWpm").innerText = result.wpm;
+    document.getElementById("finalAccuracy").innerText =
+        result.accuracy + "%";
+    document.getElementById("finalErrors").innerText = result.errors;
+    document.getElementById("finalCPM").innerText = result.cpm;
+
+    let message = result.accuracy >= 95 && result.wpm >= 50
+        ? "🏆 Amazing! You are a typing champion!"
+        : result.wpm >= 35
+        ? "👏 Great job! Keep improving!"
+        : result.wpm >= 20
+        ? "👍 Good effort! Practice more!"
+        : "💪 Keep practicing. You can do it!";
+
+    document.getElementById("feedback").innerText = message;
+
+    saveResult(result);
+    beep(800);
+}
+
+// HISTORY
+function saveResult(result) {
+    let history = getHistory();
+
+    history.unshift({
+        wpm: result.wpm,
+        accuracy: result.accuracy,
+        date: new Date().toLocaleDateString()
+    });
+
+    history = history.slice(0, 10);
+
+    localStorage.setItem("typingHistory", JSON.stringify(history));
+
+    if (result.wpm > getBest()) {
+        localStorage.setItem("typingBest", result.wpm);
+    }
+
+    updateDashboard();
+}
+
+function updateDashboard() {
+    const history = getHistory();
+
+    document.getElementById("best").innerText = getBest();
+
+    const historyDiv = document.getElementById("history");
+
+    if (!history.length) {
+        historyDiv.innerHTML =
+            '<p style="color:var(--muted);font-size:13px">No results yet.</p>';
+    } else {
+        historyDiv.innerHTML = history.slice(0, 5).map(item => `
+            <div class="history-item">
+                <span>${item.date} · ${item.accuracy}%</span>
+                <span>${item.wpm} WPM</span>
+            </div>
+        `).join("");
+    }
+
+    const chart = document.getElementById("chart");
+
+    if (!history.length) {
+        chart.innerHTML = "";
+    } else {
+        const values = [...history].reverse();
+
+        const max = Math.max(1, ...values.map(x => x.wpm));
+
+        chart.innerHTML = values.map((item, index) => `
+            <div class="bar"
+                 style="height:${Math.max(5, item.wpm / max * 100)}%">
+                <small>${index + 1}</small>
+            </div>
+        `).join("");
+    }
+}
+
+function clearHistory() {
+    if (!confirm("Clear all typing history and personal best?")) return;
+
+    localStorage.removeItem("typingHistory");
+    localStorage.removeItem("typingBest");
+    updateDashboard();
+}
+
+// RESET
+function resetTest() {
+    clearInterval(timer);
+
+    started = false;
+    paused = false;
+    finished = false;
+
+    totalTime = Number(document.getElementById("duration").value);
+    timeLeft = totalTime;
+
+    input.value = "";
+    input.disabled = false;
+
+    document.getElementById("timer").innerText = timeLeft + "s";
+    document.getElementById("wpm").innerText = 0;
+    document.getElementById("accuracy").innerText = "100%";
+    document.getElementById("errors").innerText = 0;
+    document.getElementById("cpm").innerText = 0;
+    document.getElementById("progressBar").style.width = "0%";
+
+    document.getElementById("status").innerText =
+        "Start typing to begin your challenge!";
+
+    document.getElementById("pauseBtn").innerText = "Ⅱ Pause";
+
+    document.getElementById("testPanel").style.display = "block";
+    document.getElementById("resultPanel").style.display = "none";
+
+    choosePassage();
+    renderPassage();
+    input.focus();
+}
+
+function newPassage() {
+    if (started && !finished) {
+        document.getElementById("status").innerText =
+            "Restart the test before changing the passage.";
+        return;
+    }
+    resetTest();
+}
+
+// KEYBOARD SHORTCUTS
+document.addEventListener("keydown", e => {
+    if (e.ctrlKey && e.key.toLowerCase() === "r") {
+        e.preventDefault();
+        resetTest();
+    }
+
+    if (e.key === "Escape" && started && !finished) {
+        togglePause();
+    }
+});
+
+document.getElementById("difficulty").addEventListener("change", resetTest);
+document.getElementById("duration").addEventListener("change", resetTest);
+
+// INITIALIZE
+loadTheme();
+updateDashboard();
+resetTest();
+
+</script>
+
+</body>
+</html>
+```
