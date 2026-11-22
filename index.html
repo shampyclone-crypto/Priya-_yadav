@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeMaster - Typing Speed Test</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0b1020;
+    color: #fff;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 800;
+    color: #a78bfa;
+}
+
+.logo span {
+    color: white;
+}
+
+header p {
+    color: #929bb5;
+    margin-top: 10px;
+}
+
+.card {
+    background: #151d32;
+    border: 1px solid #28334d;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 22px;
+}
+
+.settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.settings label {
+    color: #aab4ce;
+    font-size: 14px;
+}
+
+select {
+    background: #222d47;
+    color: white;
+    border: 1px solid #384663;
+    padding: 11px 15px;
+    border-radius: 8px;
+    margin-left: 8px;
+    outline: none;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: #151d32;
+    border: 1px solid #28334d;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat h2 {
+    color: #a78bfa;
+    font-size: 32px;
+}
+
+.stat p {
+    color: #929bb5;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.passage-title {
+    color: #aab4ce;
+    margin-bottom: 15px;
+}
+
+#passage {
+    background: #10182a;
+    padding: 22px;
+    border-radius: 12px;
+    color: #7886a5;
+    font-size: 19px;
+    line-height: 2;
+    letter-spacing: 0.5px;
+    min-height: 145px;
+    word-break: break-word;
+}
+
+.correct {
+    color: #4ade80;
+}
+
+.incorrect {
+    color: #fb7185;
+    background: rgba(251,113,133,0.15);
+    border-radius: 3px;
+}
+
+.current {
+    border-left: 2px solid #a78bfa;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+textarea {
+    width: 100%;
+    height: 110px;
+    background: #10182a;
+    border: 1px solid #384663;
+    border-radius: 12px;
+    color: white;
+    padding: 17px;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+    margin-top: 18px;
+    line-height: 1.6;
+}
+
+textarea:focus {
+    border-color: #a78bfa;
+}
+
+textarea:disabled {
+    opacity: 0.6;
+}
+
+.progress-container {
+    height: 8px;
+    background: #28334d;
+    border-radius: 20px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+#progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#8b5cf6,#c084fc);
+    transition: width 0.2s;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 13px 24px;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.primary {
+    background: linear-gradient(135deg,#8b5cf6,#6d45d8);
+    color: white;
+}
+
+.secondary {
+    background: #293550;
+    color: white;
+}
+
+#status {
+    text-align: center;
+    color: #aab4ce;
+    margin-top: 17px;
+}
+
+#result {
+    display: none;
+    text-align: center;
+}
+
+#result h2 {
+    color: #a78bfa;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.big-score {
+    font-size: 55px;
+    color: #4ade80;
+    font-weight: 800;
+    margin: 15px;
+}
+
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.result-details div {
+    background: #222d47;
+    padding: 17px 8px;
+    border-radius: 10px;
+}
+
+.result-details h3 {
+    color: #a78bfa;
+    font-size: 23px;
+}
+
+.result-details p {
+    color: #aab4ce;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+footer {
+    text-align: center;
+    color: #65718c;
+    margin-top: 30px;
+    font-size: 13px;
+}
+
+@media(max-width:600px) {
+    .stats {
+        gap: 8px;
+    }
+
+    .stat {
+        padding: 13px 5px;
+    }
+
+    .stat h2 {
+        font-size: 24px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    #passage {
+        font-size: 16px;
+    }
+
+    .result-details {
+        gap: 6px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <div class="logo">⌨ Type<span>Master</span></div>
+    <p>Improve your typing speed. Challenge yourself!</p>
+</header>
+
+<!-- Settings -->
+<div class="card settings">
+
+    <label>
+        Test Duration:
+        <select id="duration">
+            <option value="30">30 Seconds</option>
+            <option value="60" selected>60 Seconds</option>
+            <option value="120">120 Seconds</option>
+        </select>
+    </label>
+
+    <button class="secondary" onclick="resetTest()">
+        ↻ Reset Test
+    </button>
+
+</div>
+
+<!-- Live Statistics -->
+<div class="stats">
+
+    <div class="stat">
+        <h2 id="wpm">0</h2>
+        <p>WORDS / MIN</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="accuracy">100%</h2>
+        <p>ACCURACY</p>
+    </div>
+
+    <div class="stat">
+        <h2 id="timer">60</h2>
+        <p>SECONDS LEFT</p>
+    </div>
+
+</div>
+
+<!-- Typing Area -->
+<div class="card" id="testArea">
+
+    <h3 class="passage-title">Type the text below</h3>
+
+    <div id="passage"></div>
+
+    <textarea
+        id="typingInput"
+        placeholder="Click here and start typing..."
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+    ></textarea>
+
+    <div class="progress-container">
+        <div id="progress"></div>
+    </div>
+
+    <p id="status">Start typing to begin the timer!</p>
+
+    <div class="buttons">
+        <button class="primary" onclick="resetTest()">
+            ↻ Restart Test
+        </button>
+    </div>
+
+</div>
+
+<!-- Result -->
+<div class="card" id="result">
+
+    <h2>🎉 Test Completed!</h2>
+
+    <div class="big-score" id="finalWpm">0 WPM</div>
+
+    <p id="message">Great job!</p>
+
+    <div class="result-details">
+
+        <div>
+            <h3 id="finalAccuracy">0%</h3>
+            <p>Accuracy</p>
+        </div>
+
+        <div>
+            <h3 id="finalErrors">0</h3>
+            <p>Errors</p>
+        </div>
+
+        <div>
+            <h3 id="finalChars">0</h3>
+            <p>Characters</p>
+        </div>
+
+    </div>
+
+    <button class="primary" onclick="resetTest()">
+        Try Again ↻
+    </button>
+
+</div>
+
+<footer>
+    TypeMaster © 2026 | Practice Daily, Improve Always 🚀
+</footer>
+
+</div>
+
+<script>
+
+// Sample typing passages
+const passages = [
+    "The quick brown fox jumps over the lazy dog. Practice typing every day to improve your speed and accuracy. Keep learning and never give up. Technology makes our lives easier and helps us connect with the world.",
+
+    "Programming is the art of solving problems using logical thinking. HTML creates the structure of a website, CSS makes it beautiful, and JavaScript adds interactive features. Learning these skills opens many opportunities.",
+
+    "Success comes from consistent practice and determination. Every small improvement brings you closer to your goals. Stay focused, work hard, and believe in yourself. Never stop learning new things."
+];
+
+let passage = "";
+let timeLeft = 60;
+let totalTime = 60;
+let timer = null;
+let started = false;
+let finished = false;
+
+const input = document.getElementById("typingInput");
+const passageDiv = document.getElementById("passage");
+
+// Select random passage
+function choosePassage() {
+    passage = passages[
+        Math.floor(Math.random() * passages.length)
+    ];
+}
+
+// Display passage with character highlighting
+function renderPassage() {
+
+    const typed = input.value;
+    let html = "";
+
+    for (let i = 0; i < passage.length; i++) {
+
+        let className = "";
+
+        if (i < typed.length) {
+            className = typed[i] === passage[i]
+                ? "correct"
+                : "incorrect";
+        } else if (i === typed.length) {
+            className = "current";
+        }
+
+        html += `<span class="${className}">${escapeHTML(passage[i])}</span>`;
+    }
+
+    passageDiv.innerHTML = html;
+}
+
+// Safely display text
+function escapeHTML(char) {
+    return char.replace(/[&<>"']/g, c => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[c]);
+}
+
+// Calculate typing performance
+function calculate() {
+
+    const typed = input.value;
+
+    let correct = 0;
+    let errors = 0;
+
+    for (let i = 0; i < typed.length; i++) {
+
+        if (typed[i] === passage[i]) {
+            correct++;
+        } else {
+            errors++;
+        }
+    }
+
+    const elapsed = totalTime - timeLeft;
+
+    const minutes = elapsed / 60;
+
+    // Net WPM based on correctly typed characters
+    const wpm = minutes > 0
+        ? Math.round((correct / 5) / minutes)
+        : 0;
+
+    const accuracy = typed.length > 0
+        ? Math.round((correct / typed.length) * 100)
+        : 100;
+
+    document.getElementById("wpm").innerText = wpm;
+
+    document.getElementById("accuracy").innerText =
+        accuracy + "%";
+
+    document.getElementById("progress").style.width =
+        Math.min((typed.length / passage.length) * 100, 100) + "%";
+
+    return {
+        wpm,
+        accuracy,
+        errors,
+        chars: typed.length
+    };
+}
+
+// Start countdown
+function startTimer() {
+
+    if (started || finished) return;
+
+    started = true;
+
+    document.getElementById("status").innerText =
+        "🔥 Timer running! Keep typing...";
+
+    timer = setInterval(() => {
+
+        timeLeft--;
+
+        document.getElementById("timer").innerText = timeLeft;
+
+        calculate();
+
+        if (timeLeft <= 0) {
+            finishTest();
+        }
+
+    }, 1000);
+}
+
+// Listen to typing
+input.addEventListener("input", () => {
+
+    if (finished) return;
+
+    if (!started && input.value.length > 0) {
+        startTimer();
+    }
+
+    renderPassage();
+
+    calculate();
+
+    if (input.value.length >= passage.length) {
+        finishTest();
+    }
+
+});
+
+// Finish test
+function finishTest() {
+
+    if (finished) return;
+
+    finished = true;
+
+    clearInterval(timer);
+
+    input.disabled = true;
+
+    const result = calculate();
+
+    document.getElementById("testArea").style.display = "none";
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("finalWpm").innerText =
+        result.wpm + " WPM";
+
+    document.getElementById("finalAccuracy").innerText =
+        result.accuracy + "%";
+
+    document.getElementById("finalErrors").innerText =
+        result.errors;
+
+    document.getElementById("finalChars").innerText =
+        result.chars;
+
+    let message = "";
+
+    if (result.wpm >= 60 && result.accuracy >= 90) {
+        message = "🏆 Excellent! You are a typing champion!";
+    } else if (result.wpm >= 40) {
+        message = "👏 Great work! Keep practicing!";
+    } else if (result.wpm >= 20) {
+        message = "👍 Good start! Practice to get faster.";
+    } else {
+        message = "💪 Keep practicing. You will improve!";
+    }
+
+    document.getElementById("message").innerText = message;
+
+    document.getElementById("timer").innerText = timeLeft;
+
+}
+
+// Reset everything
+function resetTest() {
+
+    clearInterval(timer);
+
+    timer = null;
+
+    started = false;
+    finished = false;
+
+    totalTime = Number(
+        document.getElementById("duration").value
+    );
+
+    timeLeft = totalTime;
+
+    input.value = "";
+    input.disabled = false;
+
+    document.getElementById("timer").innerText = timeLeft;
+    document.getElementById("wpm").innerText = 0;
+    document.getElementById("accuracy").innerText = "100%";
+    document.getElementById("progress").style.width = "0%";
+
+    document.getElementById("status").innerText =
+        "Start typing to begin the timer!";
+
+    document.getElementById("testArea").style.display = "block";
+    document.getElementById("result").style.display = "none";
+
+    choosePassage();
+    renderPassage();
+
+    input.focus();
+
+}
+
+// Change duration and reset
+document.getElementById("duration").addEventListener("change", resetTest);
+
+// Initialize
+resetTest();
+
+</script>
+
+</body>
+</html>
